@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { ShoppingCart, Star } from "lucide-react";
-import type { Product } from "@/lib/data";
+import type { Product } from "@/lib/types";
 import { formatPrice } from "@/lib/data";
 import { useCartStore } from "@/lib/store";
 
