@@ -1,0 +1,26 @@
+@import "tailwindcss";
+@config "../../tailwind.config.ts";
+
+@theme inline {
+  --color-forest: #0f2419;
+  --color-forest-light: #1a3d2e;
+  --color-sage: #8fa88b;
+  --color-sage-light: #c5d4b8;
+  --color-sage-dark: #6b7f68;
+  --color-earth: #c4764a;
+  --color-earth-dark: #9a5638;
+  --color-earth-light: #e8a67a;
+  --color-page: #faf8f3;
+  --font-display: var(--font-playfair);
+  --font-sans: var(--font-inter);
+}
+
+body {
+  background-color: #faf8f3;
+  color: #0f2419;
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
+
+.text-shadow-hero {
+  text-shadow: 0 2px 24px rgba(15, 36, 25, 0.55);
+}
