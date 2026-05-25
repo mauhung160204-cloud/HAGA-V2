@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
+import CartDrawer from "@/components/cart/CartDrawer";
 import "./globals.css";
 
 const inter = Inter({
@@ -32,6 +33,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-page font-sans text-forest">
         {children}
+        <CartDrawer />
       </body>
     </html>
   );

@@ -2,8 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Menu, Search, ShoppingBag, X } from "lucide-react";
+import { Menu, Search, ShoppingCart, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import { selectTotalQuantity, useCartStore } from "@/lib/store";
 
 const navLinks = [
   { label: "Trang chủ", href: "#" },
@@ -15,6 +16,8 @@ const navLinks = [
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const totalQuantity = useCartStore(selectTotalQuantity);
+  const openCart = useCartStore((state) => state.openCart);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -71,13 +74,23 @@ export default function Header() {
           </button>
           <button
             type="button"
+            onClick={openCart}
             className="relative rounded-full p-2 text-forest/70 transition-colors hover:bg-sage/20 hover:text-forest"
-            aria-label="Giỏ hàng"
+            aria-label={
+              totalQuantity > 0
+                ? `Giỏ hàng, ${totalQuantity} sản phẩm`
+                : "Giỏ hàng"
+            }
           >
-            <ShoppingBag className="h-5 w-5" />
-            <span className="absolute right-0.5 top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-earth text-[10px] font-bold text-white">
-              0
-            </span>
+            <ShoppingCart className="h-5 w-5" />
+            {totalQuantity > 0 && (
+              <span
+                className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-bold text-white shadow-sm ring-2 ring-page"
+                aria-hidden
+              >
+                {totalQuantity > 99 ? "99+" : totalQuantity}
+              </span>
+            )}
           </button>
           <button
             type="button"

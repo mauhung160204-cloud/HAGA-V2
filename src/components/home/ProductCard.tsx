@@ -1,13 +1,27 @@
+"use client";
+
 import Image from "next/image";
 import { ShoppingCart, Star } from "lucide-react";
 import type { Product } from "@/lib/data";
 import { formatPrice } from "@/lib/data";
+import { useCartStore } from "@/lib/store";
 
 interface ProductCardProps {
   product: Product;
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
+  const addItem = useCartStore((state) => state.addItem);
+
+  const handleAddToCart = () => {
+    addItem({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      imageUrl: product.imageUrl,
+    });
+  };
+
   return (
     <article className="group flex flex-col overflow-hidden rounded-2xl border border-sage/20 bg-white shadow-card transition-all duration-300 hover:-translate-y-1.5 hover:border-sage/40 hover:shadow-card-hover">
       <div className="relative aspect-square overflow-hidden bg-sage/10">
@@ -33,6 +47,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         </p>
         <button
           type="button"
+          onClick={handleAddToCart}
           className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-earth px-4 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-earth-dark hover:shadow-md active:scale-[0.98]"
         >
           <ShoppingCart className="h-4 w-4" aria-hidden />
