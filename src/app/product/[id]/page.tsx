@@ -7,7 +7,7 @@ import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
 import { formatPrice, mapProductRow } from "@/lib/data";
 import { parseProductIdParam } from "@/lib/products";
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/server";
 import type { ProductRow } from "@/lib/types";
 
 const PLACEHOLDER_DESCRIPTION =
@@ -21,6 +21,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
   const { id } = await params;
   const productId = parseProductIdParam(id);
 
+  const supabase = await createClient();
   const { data, error } = await supabase
     .from("products")
     .select("*")

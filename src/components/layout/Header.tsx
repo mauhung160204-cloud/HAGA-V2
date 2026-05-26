@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Menu, Search, ShoppingCart, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import HeaderAuth from "@/components/layout/HeaderAuth";
 import { selectTotalQuantity, useCartStore } from "@/lib/store";
 
 const navLinks = [
@@ -72,6 +73,7 @@ export default function Header() {
           >
             <Search className="h-5 w-5" />
           </button>
+          <HeaderAuth />
           <button
             type="button"
             onClick={openCart}

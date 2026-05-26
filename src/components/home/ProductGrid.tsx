@@ -1,9 +1,10 @@
 import ProductCard from "@/components/home/ProductCard";
 import { mapProductRow } from "@/lib/data";
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/server";
 import type { ProductRow } from "@/lib/types";
 
 export default async function ProductGrid() {
+  const supabase = await createClient();
   const { data: products, error } = await supabase
     .from("products")
     .select("*")
