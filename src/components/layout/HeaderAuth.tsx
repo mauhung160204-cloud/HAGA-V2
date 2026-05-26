@@ -2,17 +2,24 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { LogOut, User } from "lucide-react";
+import { LayoutDashboard, LogOut, User } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 import { truncateEmail } from "@/lib/auth/messages";
+import { isEmailInAdminList } from "@/lib/admin";
 import { createClient } from "@/lib/supabase/client";
 
-export default function HeaderAuth() {
+interface HeaderAuthProps {
+  adminEmails: string[];
+}
+
+export default function HeaderAuth({ adminEmails }: HeaderAuthProps) {
   const router = useRouter();
   const [user, setUser] = useState<SupabaseUser | null>(null);
   const [loading, setLoading] = useState(true);
   const [signingOut, setSigningOut] = useState(false);
+
+  const isAdmin = isEmailInAdminList(user?.email, adminEmails);
 
   useEffect(() => {
     const supabase = createClient();
@@ -67,6 +74,16 @@ export default function HeaderAuth() {
 
   return (
     <div className="flex items-center gap-1 sm:gap-2">
+      {isAdmin && (
+        <Link
+          href="/admin/products"
+          className="inline-flex items-center gap-1.5 rounded-full border border-sage/30 bg-sage/10 px-2.5 py-1.5 text-xs font-semibold text-forest transition-colors hover:border-forest/30 hover:bg-sage/20 sm:px-3 sm:text-sm"
+          title="Quản trị sản phẩm"
+        >
+          <LayoutDashboard className="h-4 w-4 shrink-0" aria-hidden />
+          <span className="hidden sm:inline">Quản trị</span>
+        </Link>
+      )}
       <span
         className="hidden max-w-[120px] truncate text-xs font-medium text-forest/80 sm:inline md:max-w-[160px] md:text-sm"
         title={user.email}

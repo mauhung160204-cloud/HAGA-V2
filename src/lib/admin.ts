@@ -6,7 +6,14 @@ export function getValidAdminEmails(): string[] {
 }
 
 export function isAdminEmail(email: string | undefined | null): boolean {
+  return isEmailInAdminList(email, getValidAdminEmails());
+}
+
+/** Kiểm tra quyền admin trên client khi đã có danh sách từ server. */
+export function isEmailInAdminList(
+  email: string | undefined | null,
+  adminEmails: string[],
+): boolean {
   if (!email) return false;
-  const validAdmins = getValidAdminEmails();
-  return validAdmins.includes(email.trim().toLowerCase());
+  return adminEmails.includes(email.trim().toLowerCase());
 }
